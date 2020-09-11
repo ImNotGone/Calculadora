@@ -31,7 +31,7 @@ ask_input (){
   done
 }
 ans (){
-  echo -e "\n\e[95mAns =\e[0m $result"
+  echo -e "\n\e[95mAns:\e[0m $result"
   echo $result > ./memory.txt
 }
 op=(
@@ -63,7 +63,6 @@ do
       echo -e "\e[94m${op[$i]}\e[0m"
       let i=$i+1
       done
-    echo ""
   elif [ "$input" = "+" -o "$input" = "sum" ]
   then
     ask_input
