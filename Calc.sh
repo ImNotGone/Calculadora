@@ -1,4 +1,5 @@
 #!/bin/bash
+# Calculadora con memoria by Gone :)
 ask_input (){
   is_num1=1
   is_num2=1
