@@ -6,9 +6,9 @@ ask_input (){
   until [ "$both_num" = "0" ]
   do
     echo -e "\n\e[92mIngrese \"ans\" para utilizar el valor de la cuenta anterior\e[0m"
-    echo -e "\n\e[96mElija el primer valor:\e[0m"
+    echo -e "\n\e[96mElija el primer valor:\e[0m\e[38;5;204m"
     read num1
-    echo -e "\n\e[96mElija el segundo valor:\e[0m"
+    echo -e "\e[0m\n\e[96mElija el segundo valor:\e[0m\e[38;5;204m"
     read num2
     echo $num1 | egrep '^[Aa][Nn][Ss]$' &>/dev/null ; ans_num1=$?
     echo $num2 | egrep '^[Aa][Nn][Ss]$' &>/dev/null ; ans_num2=$?
@@ -46,18 +46,18 @@ op=(
 input="Op"
 until [ "$input" = "q" ]
 do
-    echo -e "\n\e[93mElija una operacion:\n!op para ver la lista de operaciones (\"q\" o \"exit\" para salir)\e[0m"
-    read input
-    echo $input | egrep '^[Aa][Nn][Ss]$' &>/dev/null ; mem=$?
-    if [ "$mem" = "0" ]
-    then
-      result=`cat ./memory.txt`
-      echo -e "\n\e[95mEl resultado anterior es:\e[0m $result"
-    elif [ "$input" = "!op" ]
-    then
-      echo -e "\n\e[93mOperaciones validas:\e[0m"
-      i=0
-      until [ "$i" = "${#op[*]}" ]
+  echo -e "\n\e[38;5;208mElija una operacion:\n!op para ver la lista de operaciones (\"q\" o \"exit\" para salir)\e[0m\e[38;5;204m"
+  read input
+  echo $input | egrep '^[Aa][Nn][Ss]$' &>/dev/null ; mem=$?
+  if [ "$mem" = "0" ]
+  then
+    result=`cat ./memory.txt`
+    echo -e "\n\e[95mEl resultado anterior es:\e[0m $result"
+  elif [ "$input" = "!op" ]
+  then
+    echo -e "\n\e[38;5;208mOperaciones validas:\e[0m"
+    i=0
+    until [ "$i" = "${#op[*]}" ]
       do
       echo -e "\e[94m${op[$i]}\e[0m"
       let i=$i+1
