@@ -8,6 +8,7 @@ fi
 
 ans=`cat ./memory.txt`
 input_number (){
+  ans=`cat ./memory.txt`
   is_number=1
   until [ "$is_number" = "0" ]
   do
@@ -38,6 +39,7 @@ check_number (){
 ans (){
   echo -e "\n\e[95mAns:\e[0m $result"
   echo $result > ./memory.txt
+  ans=`cat ./memory.txt`
 }
 op=(
   "+ or suma"
