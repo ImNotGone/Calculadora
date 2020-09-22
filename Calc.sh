@@ -1,5 +1,6 @@
 #!/bin/bash
 # Calculadora con memoria by Gone
+clear
 if [ ! -e ./memory.txt ]
 then
   0 > ./memory.txt
@@ -12,7 +13,7 @@ input_number (){
   do
     echo -e "\n\e[96m$1\e[38;5;204m"
     read number
-    if [ "$number" = "q" -o "$number" ="exit" ]
+    if [ "$number" = "q" -o "$number" = "exit" ]
     then
       echo -e "\n\e[31mProgram was interrupted\e[0m"
       exit 1
