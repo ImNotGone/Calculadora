@@ -49,8 +49,10 @@ op=(
   "% or resto"
   "** or exp"
   "congruencias o cong"
+  "chkcong"
   "q or exit"
   "Ans (ver ultimo resultado)"
+  "TCH"
 )
 input="Op"
 until [ "$input" = "q" -o "$input" = "exit" ]
@@ -131,14 +133,87 @@ do
     echo -e "\n\e[95mResultados:\e[0m"
     x=0
     multiplo=0
+    if [ -e ./listacongruencia.txt ]
+    then
+      rm ./listacongruencia.txt
+    fi
     until [ $x -gt $d ]
     do
       let multiplo2=$b*$multiplo
       let x=$c+$multiplo2
-      echo $x
+      echo $x >> ./listacongruencia.txt
       let multiplo=$multiplo+1
       let x=$x+$b
     done
+    cat ./listacongruencia.txt
+  elif [ "$input" = "chkcong" ]
+  then
+    echo -e "\n\e[92mEsta operacion chequea los restos de todos los x modulo (b)"
+    input_number "Ingrese b:"
+    b=$number
+    echo ""
+    for x in `cat ./listacongruencia.txt`
+    do
+      let resto=$x%$b
+      echo -e "\e[95mEl resto de dividir \e[92m$x\e[95m por \e[92m$b\e[95m es = \e[0m$resto"
+    done
+  elif [ "$input" = "TCR" ]
+  then
+    echo -e "\e[92mEsta operacion resuelve sistemas de congruencia (PUEDE TARDAR MUCHO TIEMPO PARA NUMEROS GRANDES)"
+    input_number "Cuantas ecuaciones tiene el sistema?"
+    opnum=$number
+    a=0
+    input_number "Cual es el multiplo de los modulos? ej b1*b2*b3"
+    d=$number
+    until [ $a -eq $opnum ]
+    do
+      input_number "Ingrese c$a:"
+      c=$number
+      input_number "Ingrese b$a:"
+      b=$number
+      x=0
+      multiplo=0
+      until [ $x -gt $d ]
+      do
+        let multiplo2=$b*$multiplo
+        let x=$c+$multiplo2
+        echo $x >> ./TCR$a.txt
+        let multiplo=$multiplo+1
+        let x=$x+$b
+      done
+      let a=$a+1
+    done
+    cat ./TCR0.txt > ./knownmatches.txt
+    echo ""
+    w=1
+    r=0
+    until [ $w -eq $opnum ]
+    do
+      for i in `cat ./TCR$w.txt`
+      do
+        cat ./knownmatches.txt | egrep "^$i\$" &>/dev/null
+        if [ $? -eq 0 ]
+        then
+          echo $i >> ./tempmatches.txt
+        fi
+      done
+      rm ./knownmatches.txt
+      cat ./tempmatches.txt > ./knownmatches.txt
+      rm ./tempmatches.txt
+      let w=$w+1
+    done
+    for i in `ls ./TCR*.txt`
+    do
+      rm $i
+    done
+    echo -e "\n\e[95mEs solucion del sistema:\n"
+    p=1
+    for i in `cat ./knownmatches.txt`
+    do
+      echo -e "\e[m$p) \e[92mx\e[95m cong. \e[92m$i\e[95m(\e[92m$d\e[95m)"
+      let p=$p+1
+    done
+    rm ./knownmatches.txt
   elif [ "$input" = "q" -o "$input" = "exit" ]
   then
     echo -e "\n\e[31mCalculator closed\e[0m\n"
