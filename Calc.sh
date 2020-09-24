@@ -27,7 +27,7 @@ input_number (){
     is_number=`check_number $number`
     if [ ! "$is_number" = "0" ]
     then
-      echo -e "\n\e[31mEsta calculadora utiliza unicamente numeros enteros, por favor intente denuevo\e[0m"
+      echo -e "\n\e[31mEsta calculadora utiliza unicamente numeros naturales y 0, por favor intente denuevo\e[0m"
     fi
   done
 }
@@ -184,7 +184,7 @@ do
       let a=$a+1
     done
     cat ./TCR0.txt > ./knownmatches.txt
-    echo ""
+    echo -e "\n\e[90mProcesando..."
     w=1
     r=0
     until [ $w -eq $opnum ]
@@ -198,22 +198,39 @@ do
         fi
       done
       rm ./knownmatches.txt
-      cat ./tempmatches.txt > ./knownmatches.txt
-      rm ./tempmatches.txt
-      let w=$w+1
+      if [ -e ./tempmatches.txt ]
+      then
+        cat ./tempmatches.txt > ./knownmatches.txt
+        rm ./tempmatches.txt
+        let w=$w+1
+      else
+        echo "No hay soluciones al sistema" > ./error.txt
+        nope=`cat ./error.txt`
+        let w=$opnum
+      fi
     done
     for i in `ls ./TCR*.txt`
     do
       rm $i
     done
-    echo -e "\n\e[95mEs solucion del sistema:\n"
-    p=1
-    for i in `cat ./knownmatches.txt`
-    do
-      echo -e "\e[m$p) \e[92mx\e[95m cong. \e[92m$i\e[95m(\e[92m$d\e[95m)"
-      let p=$p+1
-    done
-    rm ./knownmatches.txt
+    echo -e "\n\e[95mSoluciones del sistema:\n"
+    if [ -e ./error.txt ]
+    then
+      echo -e "\e[31m$nope"
+      rm ./error.txt
+    else
+      cat ./knownmatches.txt > ./listacongruencia.txt
+      p=1
+      for i in `cat ./knownmatches.txt`
+      do
+        echo -e "\e[m$p) \e[92mx\e[95m cong. \e[92m$i\e[95m(\e[92m$d\e[95m)"
+        let p=$p+1
+      done
+    fi
+    if [ -e ./knownmatches.txt ]
+    then
+      rm ./knownmatches.txt
+    fi
   elif [ "$input" = "q" -o "$input" = "exit" ]
   then
     echo -e "\n\e[31mCalculator closed\e[0m\n"
