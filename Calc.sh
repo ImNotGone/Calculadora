@@ -52,7 +52,7 @@ op=(
   "chkcong"
   "q or exit"
   "Ans (ver ultimo resultado)"
-  "TCH"
+  "TCR"
 )
 input="Op"
 until [ "$input" = "q" -o "$input" = "exit" ]
