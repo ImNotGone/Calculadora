@@ -58,7 +58,7 @@ input="Op"
 until [ "$input" = "q" -o "$input" = "exit" ]
 do
   echo -e "\n\e[38;5;208mElija una operacion:\n!op para ver la lista de operaciones (\"q\" o \"exit\" para salir en cualquier momento)\e[0m"
-  echo -e "\e[92mIngrese \"ans\" para utilizar el valor de la cuenta anterior en todas las operaciones ( Ans = \"$ans\" )\e[0m\n\e[38;5;208mop:\e[38;5;204m"
+  echo -e "\e[92mIngrese \"ans\" para utilizar el valor de la cuenta anterior en todas las operaciones (\e[95m Ans = \"$ans\"\e[92m )\e[0m\n\e[38;5;208mop:\e[38;5;204m"
   read input
   echo $input | egrep '^[Aa][Nn][Ss]$' &>/dev/null ; mem=$?
   if [ "$mem" = "0" ]
@@ -159,7 +159,7 @@ do
     done
   elif [ "$input" = "TCR" ]
   then
-    echo -e "\e[92mEsta operacion resuelve sistemas de congruencia (PUEDE TARDAR MUCHO TIEMPO PARA NUMEROS GRANDES)"
+    echo -e "\e[92mEsta operacion resuelve sistemas de congruencia (\e[38;5;208m PUEDE TARDAR MUCHO TIEMPO PARA NUMEROS GRANDES\e[92m )"
     input_number "Cuantas ecuaciones tiene el sistema?"
     opnum=$number
     a=0
